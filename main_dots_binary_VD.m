@@ -11,6 +11,8 @@ function main_dots_binary_VD()
 
 %%
 addpath('mpsych_v1.0/')
+addpath('other_functions/')
+
 TASK_ID = 10;
 
 workspace
@@ -362,8 +364,9 @@ try
 catch
     sca
     Priority(0);
-    Audio.close();
     ple
+    Audio.close();
+    
 end
 
 clear screen
