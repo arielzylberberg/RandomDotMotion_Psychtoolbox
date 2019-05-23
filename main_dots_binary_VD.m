@@ -28,15 +28,7 @@ filename = createFileName(query.subject,extension,TASK_ID);
 try
     
     %initialize the screen
-    [~, computer] = system('hostname');
-    computer = computer(1:end-1);
-    if isequal(computer,'boulardii.local')
-        screenInfo = openExperiment(37,68); % psychophysics, small room, MBBI
-    elseif isequal(computer,'dyn-129-236-162-208.dyn.columbia.edu')
-        screenInfo = openExperiment(35.5,71); % psychophysics, large room, MBBI
-    else %default
-        screenInfo = openExperiment(37,48);
-    end
+    screenInfo = openExperiment();
 
     curWindow = screenInfo.curWindow;
     dontclear = screenInfo.dontclear;

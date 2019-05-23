@@ -14,6 +14,8 @@ function screenInfo = openExperiment(monWidth, viewDist, curScreen)
 
 
 
+
+
 mfilename
 % % 1. SEED RANDOM NUMBER GENERATOR
 % screenInfo.rseed = [];
@@ -25,6 +27,34 @@ mfilename
 % computer name
 [~, computer] = system('hostname');
 screenInfo.computer = computer(1:end-1);
+
+
+
+
+if isequal(screenInfo.computer,'boulardii.local')
+    % small MBBI
+    room = 1;
+elseif contains(screenInfo.computer,'dyn.columbia.edu')
+    % large MBBI
+    room = 2;
+else
+    room = 0;
+end
+
+
+if nargin==0
+    if room==1
+        monWidth = 37;
+        viewDist = 68;
+    elseif room==2
+        monWidth = 35.5;
+        viewDist = 71;
+    else
+        monWidth = 37;
+        viewDist = 68;
+    end
+end
+    
 
 if isLocalComputer
     Screen('Preference', 'SkipSyncTests', 1);
@@ -44,10 +74,12 @@ end
 screenInfo.curScreen = curScreen;
 
 %small psychophysics room
-if isequal(screenInfo.computer,'boulardii.local')
+if room==1
     oldRes = SetResolution(curScreen,1280,960,75);
-elseif isequal(screenInfo.computer,'dyn-129-236-162-208.dyn.columbia.edu')
+elseif room==2
     oldRes = SetResolution(curScreen,1280,960,75);
+else
+    disp('unspecified monitor')
 end
 
 
@@ -70,15 +102,15 @@ else
 end
 
 %small psychophysics room
-if isequal(screenInfo.computer,'boulardii.local') % small psych room, mbbi
+if room==1 % small psych room, mbbi
     % gamma table
     % tabla = load('./gamma_tables/gammaTable_SmallPsychRoom_20171004.mat');
     tabla = load('./gamma_tables/gammaTableSmallPsychRoom_08-Jun-2018.mat');
     Screen('LoadNormalizedGammaTable',screenInfo.curScreen,tabla.gammaTable1*[1,1,1]);
     
-elseif isequal(screenInfo.computer,'dyn-129-236-162-208.dyn.columbia.edu') % large psych room, mbbi
+elseif room==2 % large psych room, mbbi
     
-    tabla = load('./gamma_tables/gammaTableLargePsychRoom_12-Jun-2018.mat');
+    tabla = load('./gamma_tables/gammaTableLargePsychRoom_26-Feb-2019.mat');
     Screen('LoadNormalizedGammaTable',screenInfo.curScreen,tabla.gammaTable1*[1,1,1]);
     
 % else
