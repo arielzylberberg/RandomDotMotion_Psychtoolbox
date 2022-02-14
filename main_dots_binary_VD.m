@@ -37,7 +37,7 @@ try
     
     % set eyetracker
     Eye = EyeTrackerClass();
-    if isequal(screenInfo.computer,'Ariels-MacBook-Pro.local')
+    if isLocalComputer
         Eye.setPars('dummymode',1);
     end
     
